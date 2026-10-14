@@ -1,0 +1,10 @@
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\bin\Debug\BAOBAB_RIDGE_PROJECT_2781.exe.config
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\bin\Debug\BAOBAB_RIDGE_PROJECT_2781.exe
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\bin\Debug\BAOBAB_RIDGE_PROJECT_2781.pdb
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.csproj.AssemblyReference.cache
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.Form1.resources
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.Properties.Resources.resources
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.csproj.GenerateResource.cache
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.csproj.CoreCompileInputs.cache
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.exe
+C:\Users\obake\Documents\BAOBAB_RIDGE_PROJECT_2781\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.pdb
