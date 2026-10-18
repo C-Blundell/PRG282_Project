@@ -13,7 +13,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
     {
         public void CreateSummary()
         {
-            string path = "animal.txt";
+            string path = "animals.txt";
             string summaryPath = "summary.txt";
 
             if (File.Exists(path))
@@ -91,8 +91,11 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
 
                     }
                 }
-                aniAveAge = totalAge / aniCount;
-                aniAveRecoveryScore= totalRecoveryScore / aniCount;
+                if (aniCount > 0)
+                {
+                    aniAveAge = totalAge / aniCount;
+                    aniAveRecoveryScore = totalRecoveryScore / aniCount;
+                }
                 using (var sw = new StreamWriter(summaryPath))
                 {
                     
@@ -113,6 +116,44 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
                 }
             }
 
+        }
+
+        public bool DeleteAnimal(string animalID)
+        {
+            string path = "animals.txt";
+
+            if (!File.Exists(path))
+            {
+                return false;
+            }
+
+            string[] lines = File.ReadAllLines(path);
+
+            List<string> remainingAnimals = new List<string>();
+
+            bool deleted = false;
+
+            foreach (string line in lines)
+            {
+                string[] fields = line.Split('|');
+
+                if (fields.Length == 7 &&
+                    fields[0].Trim().Equals(animalID, StringComparison.OrdinalIgnoreCase))
+                {
+                    deleted = true;
+                }
+                else
+                {
+                    remainingAnimals.Add(line);
+                }
+            }
+
+            if (deleted)
+            {
+                File.WriteAllLines(path, remainingAnimals);
+            }
+
+            return deleted;
         }
     }
 }

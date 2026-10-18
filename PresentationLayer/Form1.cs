@@ -19,12 +19,16 @@ namespace BAOBAB_RIDGE_PROJECT_2781
         public Form1()
         {
             InitializeComponent();
-            this.Load += Form1_Load;
+
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.MultiSelect = false;
+            dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
 
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            LoadAnimals();
+
         }
 
         private void LoadAnimals()
@@ -58,6 +62,9 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             }
 
             dataGridView1.DataSource = table;
+
+            dataGridView1.CurrentCell = null;
+            dataGridView1.ClearSelection();
         }
 
         private void summaryBtn_Click(object sender, EventArgs e)
@@ -76,7 +83,6 @@ namespace BAOBAB_RIDGE_PROJECT_2781
                 case 0:
                     add.Add();
                     MessageBox.Show("Animal added successfully.");
-                    LoadAnimals();
                     break;
                 case 1:
                     txtID.Focus();
@@ -101,6 +107,60 @@ namespace BAOBAB_RIDGE_PROJECT_2781
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            LoadAnimals();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select an animal to delete.");
+                return;
+            }
+
+            string animalID = dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString();
+
+            if (string.IsNullOrWhiteSpace(animalID))
+            {
+                MessageBox.Show("The selected animal has no valid ID.");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete animal " + animalID + "?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+
+            try
+            {
+                bool deleted = dh.DeleteAnimal(animalID);
+
+                if (deleted)
+                {
+                    MessageBox.Show("Animal deleted successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Animal could not be found.");
+                }
+
+                LoadAnimals();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting animal: " + ex.Message);
+            }
         }
     }
 }
