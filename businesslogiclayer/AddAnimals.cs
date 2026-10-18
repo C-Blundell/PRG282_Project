@@ -31,7 +31,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781.BussinessLogicLayer
             string houseing;
 
             ClassifyAnimal(int.Parse(recovery), out status, out houseing);
-            FileStream fs = new FileStream("animals.txt", FileMode.OpenOrCreate);
+            FileStream fs = new FileStream("animals.txt", FileMode.Append);
             StreamWriter sw = new StreamWriter(fs);
             sw.WriteLine(ID + "|" + name + "|" + species + "|" + age + "|" + recovery + "|" + status + "|" + houseing);
             Console.WriteLine("Animal added successfully.");
