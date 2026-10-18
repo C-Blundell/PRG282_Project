@@ -26,7 +26,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781
         {
             LoadAnimals();
         }
-
+        //Doesn't this belong to the DataHandler class? 
         private void LoadAnimals()
         {
             string path = "animals.txt";
@@ -59,11 +59,11 @@ namespace BAOBAB_RIDGE_PROJECT_2781
 
             dataGridView1.DataSource = table;
         }
-
+        //Event that creates a summary
         private void summaryBtn_Click(object sender, EventArgs e)
         {
             dh.CreateSummary();
-            MessageBox.Show("Summary Has be generated");
+            MessageBox.Show("Summary has be generated");
 
         }
 
