@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
 {
     class DataHandler
     {
+        
         public void CreateSummary()
         {
             string path = "animals.txt";
             string summaryPath = "summary.txt";
+            
 
             //Validates that the files exists and creates a report
             if (File.Exists(path))
             {
+                //Add the varaibles to be created in the report
                 DateTime generatedTime = File.GetCreationTime(path);
                 int aniCount=0;
                 decimal totalAge = 0;
@@ -33,13 +37,13 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
                 using (var sr= new StreamReader(path))
                 {
                     string line;
-
+                    //looping through the animals.txt
                     while ((line=sr.ReadLine())!=null)
                     {
                         var parts = line.Split('|');
                         if (parts.Length==7)
                         {
-                            aniCount++;
+
                             try
                             {
                                 if (int.TryParse(parts[3], out int age))
@@ -54,9 +58,10 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
                             }
                             try
                             {
-                                if (int.TryParse(parts[4], out int recoveryScore))
+                                if (int.TryParse(parts[4], out int RecoveryScore))
                                 {
-                                    totalRecoveryScore += recoveryScore;
+                                    totalRecoveryScore += RecoveryScore;
+
                                 }
                             }
                             catch (Exception ex)
@@ -64,6 +69,8 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
 
                                 MessageBox.Show(ex.Message);
                             }
+                            
+                            
                             switch (parts[5])
                             {
                                 case "Critical":
@@ -94,6 +101,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
                 }
                 aniAveAge = totalAge / aniCount;
                 aniAveRecoveryScore= totalRecoveryScore / aniCount;
+                //Writing out the report
                 using (var sw = new StreamWriter(summaryPath))
                 {
                     
