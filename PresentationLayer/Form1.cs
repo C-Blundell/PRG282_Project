@@ -99,8 +99,108 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        //loads animal from text file when animal id is put in
+        private void Seach_Click(object sender, EventArgs e)
         {
+            string[] record = UpdateAnimal.Find(txtSearch.Text);
+
+            if (record == null)
+            {
+                MessageBox.Show("Animal ID not found.");
+                txtSearch.Focus();
+                return;
+            }
+
+            EnterEditmode(record);
+
+        }
+
+        //Commits changes to text file
+        private void saveChanges_Click(object sender, EventArgs e)
+        {
+            UpdateAnimal upd = new UpdateAnimal(txtID.Text, txtName.Text, txtSpecies.Text, txtAge.Text, txtStatus.Text);
+            int validate = upd.validateInput();
+            switch (validate)
+            {
+                case 0:
+                    if (upd.Save())
+                    {
+                        MessageBox.Show("Animal updated successfully.");
+                        LoadAnimals();
+                        ExitEditMode();
+                    }
+                    break;
+                case 2:
+                    txtName.Focus();
+                    break;
+                case 3:
+                    txtSpecies.Focus();
+                    break;
+                case 4:
+                    txtAge.Focus();
+                    break;
+                case 5:
+                    txtStatus.Focus();
+                    break;
+                default:
+                    MessageBox.Show("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        //leaves edit mode
+        private void clear_Click(object sender, EventArgs e)
+        {
+            ExitEditMode();
+        }
+
+        private void LoadRow(int rowIndex)
+        {
+            string[] record = UpdateAnimal.Find(Convert.ToString(dataGridView1.Rows[rowIndex].Cells[0].Value));
+
+            if (record == null)
+            {
+                MessageBox.Show("Animal ID not found.");
+                return;
+            }
+
+            EnterEditmode(record);
+        }
+
+        //Makes the data editable, disables add button
+        private void EnterEditmode(string[] record)
+        {
+            txtID.Text = record[0].Trim();
+            txtName.Text = record[1].Trim();
+            txtSpecies.Text = record[2].Trim();
+            txtAge.Text = record[3].Trim();
+            txtStatus.Text = record[4].Trim();
+            txtID.ReadOnly = true;
+            AddAnimals.Enabled = false;
+            saveChanges.Enabled = true;
+        }
+
+        //Clears data in textboxes and enables add button while disabling save changes button
+        private void ExitEditMode()
+        {
+            txtID.Clear();
+            txtName.Clear();
+            txtSpecies.Clear();
+            txtAge.Clear();
+            txtStatus.Clear();
+            txtSearch.Clear();
+            txtID.ReadOnly = false;
+            AddAnimals.Enabled = true;
+            saveChanges.Enabled = false;
+            txtID.Focus();
+        }
+        
+        //loads edit mode when clicking datagridview
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            LoadRow(e.RowIndex);
         }
     }
 }

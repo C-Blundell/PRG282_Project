@@ -35,8 +35,11 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtID = new System.Windows.Forms.TextBox();
             this.AddAnimals = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Seach = new System.Windows.Forms.Button();
+            this.clear = new System.Windows.Forms.Button();
+            this.saveChanges = new System.Windows.Forms.Button();
+            this.txtSearch = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,16 +110,6 @@
             this.AddAnimals.UseVisualStyleBackColor = true;
             this.AddAnimals.Click += new System.EventHandler(this.AddAnimals_Click);
             // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Location = new System.Drawing.Point(433, 317);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(140, 62);
-            this.btnUpdate.TabIndex = 14;
-            this.btnUpdate.Text = "Update";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -126,14 +119,56 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(675, 216);
             this.dataGridView1.TabIndex = 15;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Seach
+            // 
+            this.Seach.Location = new System.Drawing.Point(16, 267);
+            this.Seach.Name = "Seach";
+            this.Seach.Size = new System.Drawing.Size(75, 23);
+            this.Seach.TabIndex = 16;
+            this.Seach.Text = "Search";
+            this.Seach.UseVisualStyleBackColor = true;
+            this.Seach.Click += new System.EventHandler(this.Seach_Click);
+            // 
+            // clear
+            // 
+            this.clear.Location = new System.Drawing.Point(600, 317);
+            this.clear.Name = "clear";
+            this.clear.Size = new System.Drawing.Size(127, 62);
+            this.clear.TabIndex = 17;
+            this.clear.Text = "Clear";
+            this.clear.UseVisualStyleBackColor = true;
+            this.clear.Click += new System.EventHandler(this.clear_Click);
+            // 
+            // saveChanges
+            // 
+            this.saveChanges.Location = new System.Drawing.Point(767, 317);
+            this.saveChanges.Name = "saveChanges";
+            this.saveChanges.Size = new System.Drawing.Size(104, 62);
+            this.saveChanges.TabIndex = 18;
+            this.saveChanges.Text = "Save Changes";
+            this.saveChanges.UseVisualStyleBackColor = true;
+            this.saveChanges.Click += new System.EventHandler(this.saveChanges_Click);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(138, 267);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(100, 22);
+            this.txtSearch.TabIndex = 19;
+            this.txtSearch.Text = "Search";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(981, 528);
+            this.Controls.Add(this.txtSearch);
+            this.Controls.Add(this.saveChanges);
+            this.Controls.Add(this.clear);
+            this.Controls.Add(this.Seach);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btnUpdate);
             this.Controls.Add(this.txtStatus);
             this.Controls.Add(this.txtAge);
             this.Controls.Add(this.txtSpecies);
@@ -160,8 +195,11 @@
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.TextBox txtID;
         private System.Windows.Forms.Button AddAnimals;
-        private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button Seach;
+        private System.Windows.Forms.Button clear;
+        private System.Windows.Forms.Button saveChanges;
+        private System.Windows.Forms.TextBox txtSearch;
     }
 }
 
