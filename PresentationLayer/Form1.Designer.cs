@@ -356,7 +356,7 @@
             // CriticalLabel
             // 
             this.CriticalLabel.AutoSize = true;
-            this.CriticalLabel.Location = new System.Drawing.Point(531, 35);
+            this.CriticalLabel.Location = new System.Drawing.Point(643, 35);
             this.CriticalLabel.Name = "CriticalLabel";
             this.CriticalLabel.Size = new System.Drawing.Size(51, 16);
             this.CriticalLabel.TabIndex = 13;
@@ -365,7 +365,7 @@
             // SeriousLabel
             // 
             this.SeriousLabel.AutoSize = true;
-            this.SeriousLabel.Location = new System.Drawing.Point(531, 72);
+            this.SeriousLabel.Location = new System.Drawing.Point(643, 72);
             this.SeriousLabel.Name = "SeriousLabel";
             this.SeriousLabel.Size = new System.Drawing.Size(51, 16);
             this.SeriousLabel.TabIndex = 14;
@@ -374,7 +374,7 @@
             // StableLabel
             // 
             this.StableLabel.AutoSize = true;
-            this.StableLabel.Location = new System.Drawing.Point(531, 110);
+            this.StableLabel.Location = new System.Drawing.Point(643, 110);
             this.StableLabel.Name = "StableLabel";
             this.StableLabel.Size = new System.Drawing.Size(51, 16);
             this.StableLabel.TabIndex = 15;
@@ -383,7 +383,7 @@
             // ReleaseLabel
             // 
             this.ReleaseLabel.AutoSize = true;
-            this.ReleaseLabel.Location = new System.Drawing.Point(531, 182);
+            this.ReleaseLabel.Location = new System.Drawing.Point(643, 182);
             this.ReleaseLabel.Name = "ReleaseLabel";
             this.ReleaseLabel.Size = new System.Drawing.Size(51, 16);
             this.ReleaseLabel.TabIndex = 16;
@@ -392,7 +392,7 @@
             // RecLabel
             // 
             this.RecLabel.AutoSize = true;
-            this.RecLabel.Location = new System.Drawing.Point(531, 147);
+            this.RecLabel.Location = new System.Drawing.Point(643, 147);
             this.RecLabel.Name = "RecLabel";
             this.RecLabel.Size = new System.Drawing.Size(51, 16);
             this.RecLabel.TabIndex = 17;
