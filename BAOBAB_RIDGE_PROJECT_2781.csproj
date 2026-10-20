@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLayer\AddAnimals.cs" />
+    <Compile Include="BusinessLayer\UpdateAnimal.cs" />
     <Compile Include="DataLayer\DataHandler.cs" />
     <Compile Include="PresentationLayer\Form1.cs">
       <SubType>Form</SubType>
