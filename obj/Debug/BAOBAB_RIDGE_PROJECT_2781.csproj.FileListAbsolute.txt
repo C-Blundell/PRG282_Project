@@ -39,3 +39,13 @@ C:\Users\obake\Desktop\git\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.csproj.GenerateRe
 C:\Users\obake\Desktop\git\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.csproj.CoreCompileInputs.cache
 C:\Users\obake\Desktop\git\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.exe
 C:\Users\obake\Desktop\git\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.pdb
+C:\Users\chris\Documents\GitHub\PRG282_Project\bin\Debug\BAOBAB_RIDGE_PROJECT_2781.exe.config
+C:\Users\chris\Documents\GitHub\PRG282_Project\bin\Debug\BAOBAB_RIDGE_PROJECT_2781.exe
+C:\Users\chris\Documents\GitHub\PRG282_Project\bin\Debug\BAOBAB_RIDGE_PROJECT_2781.pdb
+C:\Users\chris\Documents\GitHub\PRG282_Project\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.csproj.AssemblyReference.cache
+C:\Users\chris\Documents\GitHub\PRG282_Project\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.Form1.resources
+C:\Users\chris\Documents\GitHub\PRG282_Project\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.Properties.Resources.resources
+C:\Users\chris\Documents\GitHub\PRG282_Project\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.csproj.GenerateResource.cache
+C:\Users\chris\Documents\GitHub\PRG282_Project\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.csproj.CoreCompileInputs.cache
+C:\Users\chris\Documents\GitHub\PRG282_Project\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.exe
+C:\Users\chris\Documents\GitHub\PRG282_Project\obj\Debug\BAOBAB_RIDGE_PROJECT_2781.pdb

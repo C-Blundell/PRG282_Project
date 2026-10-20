@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -123,5 +124,84 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
             }
 
         }
+        public bool DeleteAnimal(string animalID)
+        {
+            string path = "animals.txt";
+
+            if (!File.Exists(path))
+            {
+                return false;
+            }
+
+            string[] lines = File.ReadAllLines(path);
+
+            List<string> remainingAnimals = new List<string>();
+
+            bool deleted = false;
+
+            foreach (string line in lines)
+            {
+                string[] fields = line.Split('|');
+
+                if (fields.Length == 7 &&
+                    fields[0].Trim().Equals(animalID, StringComparison.OrdinalIgnoreCase))
+                {
+                    deleted = true;
+                }
+                else
+                {
+                    remainingAnimals.Add(line);
+                }
+            }
+
+            if (deleted)
+            {
+                File.WriteAllLines(path, remainingAnimals);
+            }
+
+            return deleted;
+        }
+
+        public DataTable LoadAnimals()
+        {
+            string path = "animals.txt";
+            var table = new DataTable();
+
+            table.Columns.Add("ID");
+            table.Columns.Add("Name");
+            table.Columns.Add("Species");
+            table.Columns.Add("Age", typeof(int));
+            table.Columns.Add("Recovery Score", typeof(int));
+            table.Columns.Add("Status");
+            table.Columns.Add("Housing");
+
+            if (!File.Exists(path))
+                return table;
+
+            foreach (string line in File.ReadAllLines(path))
+            {
+                if (string.IsNullOrWhiteSpace(line))
+                    continue;
+
+                string[] p = line.Split('|')
+                                 .Select(x => x.Trim())
+                                 .ToArray();
+
+                if (p.Length != 7)
+                    continue;
+
+                if (int.TryParse(p[3], out int age) &&
+                    int.TryParse(p[4], out int score))
+                {
+                    table.Rows.Add(
+                        p[0], p[1], p[2],
+                        age, score, p[5], p[6]
+                    );
+                }
+            }
+
+            return table;
+        }
+
     }
 }

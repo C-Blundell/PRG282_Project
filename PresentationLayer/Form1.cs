@@ -19,46 +19,16 @@ namespace BAOBAB_RIDGE_PROJECT_2781
         public Form1()
         {
             InitializeComponent();
-            this.Load += Form1_Load;
 
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            LoadAnimals();
-        }
+
+
         //Doesn't this belong to the DataHandler class? 
         private void LoadAnimals()
         {
-            string path = "animals.txt";
-
-            if (!File.Exists(path))
-            {
-                dataGridView1.DataSource = null;
-                return;
-            }
-
-            var table = new DataTable();
-            table.Columns.Add("ID");
-            table.Columns.Add("Name");
-            table.Columns.Add("Species");
-            table.Columns.Add("Age", typeof(int));
-            table.Columns.Add("Recovery Score", typeof(int));
-            table.Columns.Add("Status");
-            table.Columns.Add("Housing");
-
-            foreach (string line in File.ReadAllLines(path))
-            {
-                if (string.IsNullOrWhiteSpace(line)) continue;
-
-                string[] p = line.Split('|').Select(x => x.Trim()).ToArray();
-                if (p.Length != 7) continue;
-
-                if (int.TryParse(p[3], out int age) && int.TryParse(p[4], out int score))
-                    table.Rows.Add(p[0], p[1], p[2], age, score, p[5], p[6]);
-            }
-
-            dataGridView1.DataSource = table;
+            dataGridView1.DataSource = dh.LoadAnimals();
         }
+
         //Event that creates a summary
         private void summaryBtn_Click(object sender, EventArgs e)
         {
@@ -194,13 +164,106 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             saveChanges.Enabled = false;
             txtID.Focus();
         }
-        
+
         //loads edit mode when clicking datagridview
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return;
+            if (e.RowIndex < 0)
+                return;
 
             LoadRow(e.RowIndex);
+        }
+
+        public bool DeleteAnimal(string animalID)
+        {
+            string path = "animals.txt";
+
+            if (!File.Exists(path))
+            {
+                return false;
+            }
+
+            string[] lines = File.ReadAllLines(path);
+
+            List<string> remainingAnimals = new List<string>();
+
+            bool deleted = false;
+
+            foreach (string line in lines)
+            {
+                string[] fields = line.Split('|');
+
+                if (fields.Length == 7 &&
+                    fields[0].Trim().Equals(animalID, StringComparison.OrdinalIgnoreCase))
+                {
+                    deleted = true;
+                }
+                else
+                {
+                    remainingAnimals.Add(line);
+                }
+            }
+
+            if (deleted)
+            {
+                File.WriteAllLines(path, remainingAnimals);
+            }
+
+            return deleted;
+        }
+
+        private void btnView_Click(object sender, EventArgs e)
+        {
+            LoadAnimals();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select an animal to delete.");
+                return;
+            }
+
+            string animalID = dataGridView1.SelectedRows[0].Cells["ID"].Value.ToString();
+
+            if (string.IsNullOrWhiteSpace(animalID))
+            {
+                MessageBox.Show("The selected animal has no valid ID.");
+                return;
+            }
+
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete animal " + animalID + "?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.No)
+            {
+                return;
+            }
+
+            try
+            {
+                bool deleted = dh.DeleteAnimal(animalID);
+
+                if (deleted)
+                {
+                    MessageBox.Show("Animal deleted successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Animal could not be found.");
+                }
+
+                LoadAnimals();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting animal: " + ex.Message);
+            }
         }
     }
 }
