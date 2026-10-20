@@ -16,25 +16,40 @@ namespace BAOBAB_RIDGE_PROJECT_2781
     public partial class Form1 : Form
     {
         DataHandler dh = new DataHandler();
+
         public Form1()
         {
             InitializeComponent();
-
+            LoadAnimals();
         }
 
-
-        //Doesn't this belong to the DataHandler class? 
         private void LoadAnimals()
         {
             dataGridView1.DataSource = dh.LoadAnimals();
         }
 
-        //Event that creates a summary
+        // Event that creates a summary and populates the report UI labels
         private void summaryBtn_Click(object sender, EventArgs e)
         {
-            dh.CreateSummary();
-            MessageBox.Show("Summary has be generated");
+            string path = "animals.txt";
+            string summaryPath = "summary.txt";
+            List<string> animalInfo = dh.CreateSummary(path, summaryPath);
 
+            if (animalInfo != null)
+            {
+                MessageBox.Show("Summary has been generated");
+                ReportBox.Visible = true;
+
+                genLabel.Text = animalInfo[0];
+                TotalAniLabel.Text = animalInfo[1];
+                AveAgeLabel.Text = animalInfo[2];
+                AveRecLabel.Text = animalInfo[3];
+                CriticalLabel.Text =animalInfo[4];
+                SeriousLabel.Text = animalInfo[5];
+                StableLabel.Text = animalInfo[6];
+                RecLabel.Text = animalInfo[7];
+                ReleaseLabel.Text = animalInfo[8];
+            }
         }
 
         private void AddAnimals_Click(object sender, EventArgs e)
@@ -69,7 +84,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             }
         }
 
-        //loads animal from text file when animal id is put in
+        // Loads animal from text file when animal id is put in
         private void Seach_Click(object sender, EventArgs e)
         {
             string[] record = UpdateAnimal.Find(txtSearch.Text);
@@ -82,10 +97,9 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             }
 
             EnterEditmode(record);
-
         }
 
-        //Commits changes to text file
+        // Commits changes to text file
         private void saveChanges_Click(object sender, EventArgs e)
         {
             UpdateAnimal upd = new UpdateAnimal(txtID.Text, txtName.Text, txtSpecies.Text, txtAge.Text, txtStatus.Text);
@@ -118,7 +132,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             }
         }
 
-        //leaves edit mode
+        // Leaves edit mode
         private void clear_Click(object sender, EventArgs e)
         {
             ExitEditMode();
@@ -137,7 +151,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             EnterEditmode(record);
         }
 
-        //Makes the data editable, disables add button
+        // Makes the data editable, disables add button
         private void EnterEditmode(string[] record)
         {
             txtID.Text = record[0].Trim();
@@ -150,7 +164,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             saveChanges.Enabled = true;
         }
 
-        //Clears data in textboxes and enables add button while disabling save changes button
+        // Clears data in textboxes and enables add button while disabling save changes button
         private void ExitEditMode()
         {
             txtID.Clear();
@@ -165,7 +179,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             txtID.Focus();
         }
 
-        //loads edit mode when clicking datagridview
+        // Loads edit mode when clicking datagridview
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -247,7 +261,9 @@ namespace BAOBAB_RIDGE_PROJECT_2781
 
             try
             {
-                bool deleted = dh.DeleteAnimal(animalID);
+                // If DeleteAnimal is in DataHandler, call dh.DeleteAnimal(animalID)
+                // Otherwise call this.DeleteAnimal(animalID) depending on where you placed it.
+                bool deleted = DeleteAnimal(animalID);
 
                 if (deleted)
                 {

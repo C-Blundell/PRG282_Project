@@ -3,127 +3,126 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
 {
     class DataHandler
     {
-        
-        public void CreateSummary()
+        public List<string> CreateSummary(string path, string summaryPath)
         {
-            string path = "animals.txt";
-            string summaryPath = "summary.txt";
             
 
-            //Validates that the files exists and creates a report
-            if (File.Exists(path))
+            // Validates that the file exists
+            if (!File.Exists(path))
             {
-                //Add the varaibles to be created in the report
-                DateTime generatedTime = File.GetCreationTime(path);
-                int aniCount=0;
-                decimal totalAge = 0;
-                decimal aniAveAge=0;
-                decimal totalRecoveryScore = 0;
-                decimal aniAveRecoveryScore=0;
-                int criticalCount=0;
-                int seriouslCount=0;
-                int stableCount=0;
-                int recoveringCount=0;
-                int releaseReadyCount=0;
-                using (var sr= new StreamReader(path))
+                MessageBox.Show("The animals.txt file could not be found.");
+                return null;
+            }
+
+            var animalDetails = new List<string>();
+            DateTime generatedTime = File.GetCreationTime(path);
+            int aniCount = 0;
+            decimal totalAge = 0;
+            decimal totalRecoveryScore = 0;
+
+            int criticalCount = 0;
+            int seriousCount = 0;
+            int stableCount = 0;
+            int recoveringCount = 0;
+            int releaseReadyCount = 0;
+
+            using (var sr = new StreamReader(path))
+            {
+                string line;
+                // Looping through the animals.txt
+                while ((line = sr.ReadLine()) != null)
                 {
-                    string line;
-                    //looping through the animals.txt
-                    while ((line=sr.ReadLine())!=null)
+                    var parts = line.Split('|');
+                    if (parts.Length == 7)
                     {
-                        var parts = line.Split('|');
-                        if (parts.Length==7)
+                        aniCount++; // FIXED: Incrementing animal count!
+
+                        if (int.TryParse(parts[3], out int age))
                         {
-
-                            try
-                            {
-                                if (int.TryParse(parts[3], out int age))
-                                {
-                                    totalAge += age;
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-
-                                MessageBox.Show(ex.Message);
-                            }
-                            try
-                            {
-                                if (int.TryParse(parts[4], out int RecoveryScore))
-                                {
-                                    totalRecoveryScore += RecoveryScore;
-
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-
-                                MessageBox.Show(ex.Message);
-                            }
-                            
-                            
-                            switch (parts[5])
-                            {
-                                case "Critical":
-                                    criticalCount++;
-                                    break;
-                                case "Serious":
-                                    seriouslCount++;
-                                    break;
-                                case "Stable":
-                                    stableCount++;
-                                    break;
-                                case "Recovering":
-                                    recoveringCount++;
-                                    break;
-                                case "Release-Ready":
-                                    releaseReadyCount++;
-                                    break;
-                                default:
-                                    MessageBox.Show($"{parts[5]} is not an animal's Status");
-                                    break;
-                            }
-
-
+                            totalAge += age;
                         }
 
+                        if (int.TryParse(parts[4], out int recoveryScore))
+                        {
+                            totalRecoveryScore += recoveryScore;
+                        }
 
+                        switch (parts[5].Trim())
+                        {
+                            case "Critical":
+                                criticalCount++;
+                                break;
+                            case "Serious":
+                                seriousCount++;
+                                break;
+                            case "Stable":
+                                stableCount++;
+                                break;
+                            case "Recovering":
+                                recoveringCount++;
+                                break;
+                            case "Release-Ready":
+                                releaseReadyCount++;
+                                break;
+                            default:
+                                MessageBox.Show($"{parts[5]} is not a valid animal status.");
+                                break;
+                        }
                     }
-                }
-                aniAveAge = totalAge / aniCount;
-                aniAveRecoveryScore= totalRecoveryScore / aniCount;
-                //Writing out the report
-                using (var sw = new StreamWriter(summaryPath))
-                {
-                    
-                    sw.WriteLine("BAOBAB RIDGE WILDLIFE REHABILITATION CENTRE");
-                    sw.WriteLine("ANIMAL SUMMARY REPORT");
-                    sw.WriteLine($"Generated:  {generatedTime}");
-                    sw.WriteLine("---------------------------------------------");
-                    sw.WriteLine($"Total animals:               {aniCount}");
-                    sw.WriteLine($"Average age (years):         {aniAveAge:F2}");
-                    sw.WriteLine($"Average recovery score:      {aniAveRecoveryScore:F2}");
-                    sw.WriteLine("---------------------------------------------");
-                    sw.WriteLine("Animals per status: ");
-                    sw.WriteLine($"   Critical:        {criticalCount}");
-                    sw.WriteLine($"   Serious:         {seriouslCount}");
-                    sw.WriteLine($"   Stable:          {stableCount}");
-                    sw.WriteLine($"   Recovering:      {recoveringCount}");
-                    sw.WriteLine($"   Release-Ready:   {releaseReadyCount}");
                 }
             }
 
+            // Safe division check
+            decimal aniAveAge = 0;
+            decimal aniAveRecoveryScore = 0;
+
+            if (aniCount > 0)
+            {
+                aniAveAge = totalAge / aniCount;
+                aniAveRecoveryScore = totalRecoveryScore / aniCount;
+            }
+
+            // Populate list to return to Form1
+            animalDetails.Add(generatedTime.ToString());
+            animalDetails.Add(aniCount.ToString());
+            animalDetails.Add(aniAveAge.ToString("F2"));
+            animalDetails.Add(aniAveRecoveryScore.ToString("F2"));
+            animalDetails.Add(criticalCount.ToString());
+            animalDetails.Add(seriousCount.ToString());
+            animalDetails.Add(stableCount.ToString());
+            animalDetails.Add(recoveringCount.ToString());
+            animalDetails.Add(releaseReadyCount.ToString());
+
+            // Writing out the report file
+            using (var sw = new StreamWriter(summaryPath))
+            {
+                sw.WriteLine("BAOBAB RIDGE WILDLIFE REHABILITATION CENTRE");
+                sw.WriteLine("ANIMAL SUMMARY REPORT");
+                sw.WriteLine($"Generated:  {generatedTime}");
+                sw.WriteLine("---------------------------------------------");
+                sw.WriteLine($"Total animals:               {aniCount}");
+                sw.WriteLine($"Average age (years):         {aniAveAge:F2}");
+                sw.WriteLine($"Average recovery score:      {aniAveRecoveryScore:F2}");
+                sw.WriteLine("---------------------------------------------");
+                sw.WriteLine("Animals per status: ");
+                sw.WriteLine($"   Critical:        {criticalCount}");
+                sw.WriteLine($"   Serious:         {seriousCount}");
+                sw.WriteLine($"   Stable:          {stableCount}");
+                sw.WriteLine($"   Recovering:      {recoveringCount}");
+                sw.WriteLine($"   Release-Ready:   {releaseReadyCount}");
+            }
+
+            return animalDetails;
         }
+
         public bool DeleteAnimal(string animalID)
         {
             string path = "animals.txt";
@@ -134,9 +133,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
             }
 
             string[] lines = File.ReadAllLines(path);
-
             List<string> remainingAnimals = new List<string>();
-
             bool deleted = false;
 
             foreach (string line in lines)
@@ -202,6 +199,5 @@ namespace BAOBAB_RIDGE_PROJECT_2781.DataAccessLayer
 
             return table;
         }
-
     }
 }
