@@ -9,7 +9,7 @@ Christopher Blundell - 604377
 How to run:
 Clone the repository from GitHub or download the project files.
 Open the solution file (.sln) in Visual Studio.
-Build the solution using Build → Build Solution.
+Build the solution using Build -> Build Solution.
 Run the application using Start or F5.
 
 Features:
