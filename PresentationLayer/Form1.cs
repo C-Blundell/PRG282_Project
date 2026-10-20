@@ -26,10 +26,6 @@ namespace BAOBAB_RIDGE_PROJECT_2781
             dataGridView1.AllowUserToAddRows = false;
 
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
 
         private void LoadAnimals()
         {
@@ -103,10 +99,6 @@ namespace BAOBAB_RIDGE_PROJECT_2781
                     MessageBox.Show("An unknown error occurred.");
                     break;
             }
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
         }
 
         private void btnView_Click(object sender, EventArgs e)
