@@ -18,6 +18,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781.BussinessLogicLayer
             this.recovery = recovery;
         }
 
+        //Looks for the animal in the file
         public static string[] Find(string animalID)
         {
             animalID = animalID.Trim().ToUpper();
@@ -40,6 +41,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781.BussinessLogicLayer
             return null;
         }
 
+        //Validation
         public int validateInput()
         {
             if (name.Length < 1 || name.Length > 30)
@@ -81,6 +83,7 @@ namespace BAOBAB_RIDGE_PROJECT_2781.BussinessLogicLayer
             return 0;
         }
 
+        //Save changes made to text file
         public bool Save()
         {
             if (!File.Exists("animals.txt"))
